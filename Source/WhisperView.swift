@@ -76,7 +76,7 @@ open class WhisperView: UIView {
     gradient.frame = frame
     gradient.colors = colors.map { $0.cgColor }
     gradient.startPoint = CGPoint.zero
-    gradient.endPoint = CGPoint(x: 1, y: 0)
+    gradient.endPoint = CGPoint(x: 1, y: 1)
     layer.insertSublayer(gradient, at: 0)
   }
 }
