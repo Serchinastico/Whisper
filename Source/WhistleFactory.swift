@@ -66,6 +66,10 @@ open class WhistleFactory: UIViewController {
     moveWindowToFront()
     setupFrames()
 
+    if let gradientColors = murmur.gradientColors {
+      insertGradientLayer(withFrame: view.frame, colors: gradientColors)
+    }
+
     switch action {
     case .show(let duration):
       show(duration: duration)
@@ -174,5 +178,14 @@ open class WhistleFactory: UIViewController {
   @objc fileprivate func handleTapGestureRecognizer() {
       guard let murmur = murmur else { return }
       murmur.action?()
+  }
+
+  private func insertGradientLayer(withFrame frame: CGRect, colors: [UIColor]) {
+    let gradient = CAGradientLayer()
+    gradient.frame = frame
+    gradient.colors = colors.map { $0.cgColor }
+    gradient.startPoint = CGPoint.zero
+    gradient.endPoint = CGPoint(x: frame.width, y: 0)
+    view.layer.insertSublayer(gradient, at: 0)
   }
 }
