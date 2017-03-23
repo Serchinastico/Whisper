@@ -70,6 +70,10 @@ open class WhistleFactory: UIViewController {
       insertGradientLayer(withFrame: view.frame, colors: gradientColors)
     }
 
+    if let shadow = murmur.shadow {
+      configure(shadow: shadow)
+    }
+
     switch action {
     case .show(let duration):
       show(duration: duration)
@@ -187,5 +191,14 @@ open class WhistleFactory: UIViewController {
     gradient.startPoint = CGPoint.zero
     gradient.endPoint = CGPoint(x: 1, y: 1)
     view.layer.insertSublayer(gradient, at: 0)
+  }
+
+  private func configure(shadow: Shadow) {
+    view.layer.shadowColor = shadow.color.cgColor
+    view.layer.shadowOffset = shadow.offset
+    view.layer.shadowRadius = shadow.radius
+    view.layer.shadowOpacity = 1
+    view.layer.shouldRasterize = true
+    view.layer.rasterizationScale = UIScreen.main.scale
   }
 }
