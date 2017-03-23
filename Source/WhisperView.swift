@@ -44,7 +44,6 @@ open class WhisperView: UIView {
 
     titleLabel.text = message.title
     titleLabel.textColor = message.textColor
-    backgroundColor = message.backgroundColor
 
     if let images = whisperImages , images.count > 1 {
       complementImageView.animationImages = images
@@ -57,6 +56,12 @@ open class WhisperView: UIView {
     frame = CGRect(x: 0, y: height, width: UIScreen.main.bounds.width, height: Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
+    if let gradientColors = message.gradientColors {
+      insertGradientLayer(withFrame: frame, colors: gradientColors)
+    } else {
+      backgroundColor = message.backgroundColor
+    }
+
     titleLabel.sizeToFit()
     setupFrames()
     clipsToBounds = true
@@ -64,6 +69,15 @@ open class WhisperView: UIView {
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  private func insertGradientLayer(withFrame frame: CGRect, colors: [UIColor]) {
+    let gradient = CAGradientLayer()
+    gradient.frame = frame
+    gradient.colors = colors.map { $0.cgColor }
+    gradient.startPoint = CGPoint.zero
+    gradient.endPoint = CGPoint(x: frame.width, y: 0)
+    layer.insertSublayer(gradient, at: 0)
   }
 }
 
