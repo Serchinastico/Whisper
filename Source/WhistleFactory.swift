@@ -86,7 +86,7 @@ open class WhistleFactory: UIViewController {
 
   open func setupWindow() {
     whistleWindow.addSubview(self.view)
-    whistleWindow.clipsToBounds = true
+    whistleWindow.clipsToBounds = false
     moveWindowToFront()
   }
 
@@ -200,5 +200,6 @@ open class WhistleFactory: UIViewController {
     view.layer.shadowOpacity = 1
     view.layer.shouldRasterize = true
     view.layer.rasterizationScale = UIScreen.main.scale
+    view.clipsToBounds = false
   }
 }
