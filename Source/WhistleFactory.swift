@@ -31,6 +31,8 @@ open class WhistleFactory: UIViewController {
   open var viewController: UIViewController?
   open var hideTimer = Timer()
 
+  private var gradientLayer: CAGradientLayer?
+
   // MARK: - Initializers
 
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -185,12 +187,17 @@ open class WhistleFactory: UIViewController {
   }
 
   private func insertGradientLayer(withFrame frame: CGRect, colors: [UIColor]) {
-    let gradient = CAGradientLayer()
-    gradient.frame = frame
-    gradient.colors = colors.map { $0.cgColor }
-    gradient.startPoint = CGPoint.zero
-    gradient.endPoint = CGPoint(x: 1, y: 1)
-    view.layer.insertSublayer(gradient, at: 0)
+    let newGradientLayer = CAGradientLayer()
+    newGradientLayer.frame = frame
+    newGradientLayer.colors = colors.map { $0.cgColor }
+    newGradientLayer.startPoint = CGPoint.zero
+    newGradientLayer.endPoint = CGPoint(x: 1, y: 1)
+    if let gradientLayer = gradientLayer {
+      view.layer.replaceSublayer(gradientLayer, with: newGradientLayer)
+    } else {
+      view.layer.insertSublayer(newGradientLayer, at: 0)
+    }
+    self.gradientLayer = newGradientLayer
   }
 
   private func configure(shadow: Shadow) {
