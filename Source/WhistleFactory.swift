@@ -68,12 +68,8 @@ open class WhistleFactory: UIViewController {
     moveWindowToFront()
     setupFrames()
 
-    if let gradientColors = murmur.gradientColors {
-      insertGradientLayer(withFrame: view.frame, colors: gradientColors)
-    }
-
-    if let shadow = murmur.shadow {
-      configure(shadow: shadow)
+    if let configurationHandler = murmur.configurationHandler {
+      configurationHandler(self)
     }
 
     switch action {
@@ -184,29 +180,5 @@ open class WhistleFactory: UIViewController {
   @objc fileprivate func handleTapGestureRecognizer() {
       guard let murmur = murmur else { return }
       murmur.action?()
-  }
-
-  private func insertGradientLayer(withFrame frame: CGRect, colors: [UIColor]) {
-    let newGradientLayer = CAGradientLayer()
-    newGradientLayer.frame = frame
-    newGradientLayer.colors = colors.map { $0.cgColor }
-    newGradientLayer.startPoint = CGPoint.zero
-    newGradientLayer.endPoint = CGPoint(x: 1, y: 1)
-    if let gradientLayer = gradientLayer {
-      view.layer.replaceSublayer(gradientLayer, with: newGradientLayer)
-    } else {
-      view.layer.insertSublayer(newGradientLayer, at: 0)
-    }
-    self.gradientLayer = newGradientLayer
-  }
-
-  private func configure(shadow: Shadow) {
-    view.layer.shadowColor = shadow.color.cgColor
-    view.layer.shadowOffset = shadow.offset
-    view.layer.shadowRadius = shadow.radius
-    view.layer.shadowOpacity = 1
-    view.layer.shouldRasterize = true
-    view.layer.rasterizationScale = UIScreen.main.scale
-    view.clipsToBounds = false
   }
 }

@@ -5,14 +5,12 @@ public struct Message {
   public var title: String
   public var textColor: UIColor
   public var backgroundColor: UIColor
-  public var gradientColors: [UIColor]?
   public var images: [UIImage]?
 
-    public init(title: String, textColor: UIColor = UIColor.white, backgroundColor: UIColor = UIColor.lightGray, gradientColors: [UIColor]? = nil, images: [UIImage]? = nil) {
+  public init(title: String, textColor: UIColor = UIColor.white, backgroundColor: UIColor = UIColor.lightGray, gradientColors: [UIColor]? = nil, images: [UIImage]? = nil) {
     self.title = title
     self.textColor = textColor
     self.backgroundColor = backgroundColor
-    self.gradientColors = gradientColors
     self.images = images
   }
 }
@@ -38,32 +36,17 @@ public struct Murmur {
 
   public var title: String
   public var backgroundColor: UIColor
-  public var gradientColors: [UIColor]?
   public var titleColor: UIColor
   public var font: UIFont
   public var action: (() -> Void)?
-  public var shadow: Shadow?
+  public var configurationHandler: ((WhistleFactory) -> Void)?
 
-  public init(title: String, backgroundColor: UIColor = ColorList.Whistle.background, gradientColors: [UIColor]? = nil, titleColor: UIColor = ColorList.Whistle.title, font: UIFont = FontList.Whistle.title, action: (() -> Void)? = nil, shadow: Shadow? = nil) {
+  public init(title: String, backgroundColor: UIColor = ColorList.Whistle.background, titleColor: UIColor = ColorList.Whistle.title, font: UIFont = FontList.Whistle.title, action: (() -> Void)? = nil, configurationHandler: ((WhistleFactory) -> Void)? = nil) {
     self.title = title
     self.backgroundColor = backgroundColor
-    self.gradientColors = gradientColors
     self.titleColor = titleColor
     self.font = font
     self.action = action
-    self.shadow = shadow
-  }
-}
-
-
-public struct Shadow {
-  public var color: UIColor
-  public var radius: CGFloat
-  public var offset: CGSize
-
-  public init(color: UIColor, radius: CGFloat = 1, offset: CGSize = CGSize(width: 0, height: 0)) {
-    self.color = color
-    self.radius = radius
-    self.offset = offset
+    self.configurationHandler = configurationHandler
   }
 }

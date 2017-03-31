@@ -56,11 +56,7 @@ open class WhisperView: UIView {
     frame = CGRect(x: 0, y: height, width: UIScreen.main.bounds.width, height: Dimensions.height)
     for subview in transformViews { addSubview(subview) }
 
-    if let gradientColors = message.gradientColors {
-      insertGradientLayer(withFrame: frame, colors: gradientColors)
-    } else {
-      backgroundColor = message.backgroundColor
-    }
+    backgroundColor = message.backgroundColor
 
     titleLabel.sizeToFit()
     setupFrames()
